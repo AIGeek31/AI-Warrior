@@ -13,18 +13,24 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+# Optionally load .env for local development
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # python-dotenv not installed, skip
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x@t*gk_6+5og@664c@=u#*g%p4_j3vzd+c6hs*6lrx#=e+k(49'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-x@t*gk_6+5og@664c@=u#*g%p4_j3vzd+c6hs*6lrx#=e+k(49')
+if SECRET_KEY.startswith('django-insecure'):
+    import warnings
+    warnings.warn('WARNING: Using fallback insecure SECRET_KEY! Set DJANGO_SECRET_KEY in your environment for production.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ['1', 'true', 'yes']
 
 ALLOWED_HOSTS = ['yadayadatravelai.onrender.com', '127.0.0.1', 'localhost']
 
