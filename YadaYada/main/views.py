@@ -44,9 +44,9 @@ def login_page(request):
                 request.session['user_id'] = user.id  # Set session
                 return redirect('loggedin')
             else:
-                return render(request, 'main/login.html', {'error': 'Invalid email or password.'})
+                return render(request, 'main/login.html', {'error': 'Incorrect username or password'})
         except LocalUser.DoesNotExist:
-            return render(request, 'main/login.html', {'error': 'Invalid email or password.'})
+            return render(request, 'main/login.html', {'error': 'Incorrect username or password'})
     return render(request, 'main/login.html')
 
 def loggedin(request):
