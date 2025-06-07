@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Book Your Trip - Travel Agency</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(180deg, #1de9b6 0%, #1976d2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .booking-container {
+            background: #e3f2fd;
+            border-radius: 22px;
+            box-shadow: 0 4px 24px rgba(33,150,243,0.13);
+            padding: 38px 28px 28px 28px;
+            max-width: 370px;
+            width: 100%;
+            margin: 32px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .booking-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1976d2;
+            margin-bottom: 30px;
+            letter-spacing: 1.5px;
+            text-align: center;
+        }
+        .booking-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .booking-label {
+            font-size: 1rem;
+            color: #1976d2;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .booking-input, .booking-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #b3e5fc;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #fff;
+            transition: border 0.2s;
+            box-sizing: border-box;
+        }
+        .booking-input:focus, .booking-select:focus {
+            border: 1.5px solid #1976d2;
+            outline: none;
+        }
+        .date-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1976d2;
+            pointer-events: none;
+        }
+        .date-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .booking-btn {
+            width: 100%;
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 14px 0;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            letter-spacing: 1px;
+        }
+        .booking-btn:hover {
+            background: #fb8c00;
+        }
+        @media (max-width: 500px) {
+            .booking-container {
+                padding: 24px 6vw 18px 6vw;
+                max-width: 98vw;
+            }
+            .booking-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="booking-container">
+        <div class="booking-title">BOOK YOUR TRIP</div>
+        <form class="booking-form" method="post" action="{% url 'itinerary' %}">
+            {% csrf_token %}
+            <label class="booking-label" for="destination">Destination</label>
+            <input class="booking-input" type="text" id="destination" name="destination" placeholder="Where to?" required>
+
+            <label class="booking-label" for="checkin">Check-in</label>
+            <div class="date-wrapper">
+                <input class="booking-input" type="date" id="checkin" name="checkin" required>
+                <span class="date-icon"><i class="fa-regular fa-calendar"></i></span>
+            </div>
+
+            <label class="booking-label" for="checkout">Check-out</label>
+            <input class="booking-input" type="date" id="checkout" name="checkout" required>
+
+            <label class="booking-label" for="guests">Guests</label>
+            <select class="booking-select" id="guests" name="guests" required>
+                <option value="" disabled selected>Number of guests</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5+</option>
+            </select>
+
+            <button class="booking-btn" type="submit">Chat with our Specialist</button>
+        </form>
+    </div>
+</body>
+</html>

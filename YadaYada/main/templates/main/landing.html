@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TRAVEL AGENCY - Interactive Chat Assistant</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1de9b6 0%, #2196f3 100%);
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            max-width: 700px;
+            margin: 48px auto 0 auto;
+            background: rgba(29,233,182,0.10); /* match background tint */
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(33,150,243,0.10);
+            padding: 32px 24px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .heading {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .heading h1 {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #0d3559;
+            margin: 0 0 8px 0;
+            letter-spacing: 2px;
+        }
+        .heading h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #2196f3;
+            margin: 0 0 8px 0;
+            letter-spacing: 1px;
+        }
+        .heading p {
+            color: #3a6073;
+            font-size: 1rem;
+            margin: 0;
+        }
+        .illustration-img {
+            display: block;
+            margin: 0 auto 32px auto;
+            max-width: 110%; /* 10% bigger */
+            width: 110%; /* 10% bigger */
+            height: auto;
+            max-width: 528px; /* 10% bigger than 480px */
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        .form-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+        }
+        .search-form {
+            display: flex;
+            background: #f5fafd;
+            border-radius: 32px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+            padding: 6px 8px;
+            width: 100%;
+            max-width: 420px;
+        }
+        .search-form input[type="text"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 1.1rem;
+            padding: 10px 16px;
+            border-radius: 32px;
+            flex: 1;
+        }
+        .search-form button {
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 10px 28px;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-form button:hover {
+            background: #fb8c00;
+        }
+        @media (max-width: 800px) {
+            .main-content {
+                max-width: 98vw;
+                padding: 18px 4vw 18px 4vw;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-content {
+                margin: 12px auto 0 auto;
+                padding: 10px 2vw 18px 2vw;
+            }
+            .illustration-img {
+                padding: 8px;
+                max-width: 108vw;
+                width: 108vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="heading">
+            <h1>TRAVEL AGENCY</h1>
+            <h2>Interactive Chat Assistant</h2>
+            <p>Use our AI tools to chat with assistants in an extremely interactive way and search your desired destinations.</p>
+        </div>
+        <img 
+            class="illustration-img"
+            src="{% static 'main/chatgpt.png' %}" 
+            alt="Robot and Woman Chatting with Speech Bubbles"
+        />
+        <div class="form-section">
+            <form class="search-form" method="get" action="{% url 'login_page' %}">
+                <input type="text" name="destination" placeholder="Search for destinations" aria-label="Search for destinations" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
