@@ -24,10 +24,9 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-x@t*gk_6+5og@664c@=u#*g%p4_j3vzd+c6hs*6lrx#=e+k(49')
-if SECRET_KEY.startswith('django-insecure'):
-    import warnings
-    warnings.warn('WARNING: Using fallback insecure SECRET_KEY! Set DJANGO_SECRET_KEY in your environment for production.')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    raise Exception('DJANGO_SECRET_KEY environment variable not set! Please set it in your environment for both local and production.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ['1', 'true', 'yes']
