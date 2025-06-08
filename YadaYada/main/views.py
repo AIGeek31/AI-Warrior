@@ -118,8 +118,21 @@ def get_deepseek_response(prompt):
 def chatbot_view(request):
     if request.method == 'POST':
         user_message = request.POST.get('message')
-        bot_response = get_deepseek_response(user_message)
+        # If this is the first message, show the welcome/learning message
+        if user_message and user_message.strip() != '':
+            if request.session.get('has_seen_welcome'):
+                # For subsequent messages, use DeepSeek
+                bot_response = get_deepseek_response(user_message)
+            else:
+                # On first user message, show the welcome message and set session flag
+                bot_response = ("Hi, I'm Sourabh - your personal Travel AI assistant. "
+                                "I'm here to help you plan unforgettable trips! "
+                                "I'm still learning, so thanks for your patience as I improve every single day.")
+                request.session['has_seen_welcome'] = True
+        else:
+            bot_response = ''
         if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json':
             return JsonResponse({'response': bot_response, 'user_message': user_message})
         return render(request, 'main/chat.html', {'response': bot_response, 'user_message': user_message})
-    return render(request, 'main/chat.html')
+    # On GET, show an empty chat (no welcome message)
+    return render(request, 'main/chat.html', {'response': ''})
