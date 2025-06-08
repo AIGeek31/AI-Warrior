@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from .forms import BasicForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .models import UserInfo, LocalUser  # Add LocalUser model
 from django.contrib import messages
 from django.db import IntegrityError
+import requests
+import os
 
 # Create your views here.
 def home(request):
@@ -99,3 +101,25 @@ def itinerary_page(request):
         ]
         return render(request, 'main/itinerary.html', {'itineraries': itineraries, 'destination': destination})
     return redirect('loggedin')
+
+def get_deepseek_response(prompt):
+    DEEPSEEK_API_URL = os.environ["DEEPSEEK_API_URL"]
+    try:
+        response = requests.post(
+            DEEPSEEK_API_URL,
+            json={'prompt': prompt},
+            timeout=30
+        )
+        response.raise_for_status()
+        return response.json().get('response', 'No response from DeepSeek.')
+    except Exception as e:
+        return f"Error contacting DeepSeek: {e}"
+
+def chatbot_view(request):
+    if request.method == 'POST':
+        user_message = request.POST.get('message')
+        bot_response = get_deepseek_response(user_message)
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json':
+            return JsonResponse({'response': bot_response, 'user_message': user_message})
+        return render(request, 'main/chat.html', {'response': bot_response, 'user_message': user_message})
+    return render(request, 'main/chat.html')

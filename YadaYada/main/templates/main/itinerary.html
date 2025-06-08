@@ -78,11 +78,10 @@
             margin-bottom: 8px;
         }
         .chat-messages {
-            min-height: 60px;
-            max-height: 120px;
+            max-height: 200px;
             overflow-y: auto;
-            font-size: 0.98rem;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            padding-right: 10px;
         }
         .chat-input-row {
             display: flex;
@@ -115,24 +114,6 @@
             }
         }
     </style>
-    <script>
-        function editItinerary(idx) {
-            const details = document.getElementById('details-' + idx);
-            details.readOnly = false;
-            details.focus();
-        }
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const messages = document.getElementById('chat-messages');
-            if (input.value.trim() !== '') {
-                const msg = document.createElement('div');
-                msg.textContent = 'You: ' + input.value;
-                messages.appendChild(msg);
-                input.value = '';
-                messages.scrollTop = messages.scrollHeight;
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="itinerary-container">
@@ -152,10 +133,11 @@
                 <div>Welcome! Ask us anything about your trip.</div>
             </div>
             <div class="chat-input-row">
-                <input class="chat-input" id="chat-input" type="text" placeholder="Type your message..." onkeydown="if(event.key==='Enter'){sendMessage();return false;}">
-                <button class="chat-send" type="button" onclick="sendMessage()">Send</button>
+                <input class="chat-input" id="chat-input" type="text" placeholder="Type your message..." autocomplete="off">
+                <button class="chat-send" type="button" onclick="sendMessageToDeepSeek()">Send</button>
             </div>
         </div>
+        <script src="/static/main/itinerary_chat.js"></script>
     </div>
 </body>
 </html>
